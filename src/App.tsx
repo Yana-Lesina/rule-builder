@@ -1,10 +1,10 @@
 import './App.css';
-import { TestComponent } from 'components/TestComponent';
+import RuleBuilderPage from 'pages/RuleBuilderPage';
 
 function App() {
   return (
     <>
-      <TestComponent />
+      <RuleBuilderPage />
     </>
   );
 }
