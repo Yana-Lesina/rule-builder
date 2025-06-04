@@ -14,6 +14,8 @@ export interface Store {
 
   addInstance: (parentId: string, filterConfig: FilterNode | GroupNode) => void;
   updateFilter: (targetId: string, newFilterConfig: FilterNode) => void;
+  lockGroup: (targetId: string) => void;
+  disableGroup: (targetId: string) => void;
 }
 
 const findNodeById = (tree: FilterNode | GroupNode, targetID: string) => {
@@ -35,6 +37,24 @@ const findNodeById = (tree: FilterNode | GroupNode, targetID: string) => {
   }
 
   return node;
+};
+
+const implementNodeChanges = (node: FilterNode | GroupNode, changes: (node: FilterNode | GroupNode) => void) => {
+  const stack = [node];
+
+  while (stack.length) {
+    const currentNode = stack.pop();
+
+    if (currentNode) {
+      changes(currentNode);
+
+      if (currentNode?.children) {
+        currentNode.children.forEach((child) => {
+          stack.push(child);
+        });
+      }
+    }
+  }
 };
 
 export const useStore = create<Store>()(
@@ -64,8 +84,22 @@ export const useStore = create<Store>()(
         }
       }),
 
-    // deleteInstance: ...,
-    // lockGroup: ...,
-    // disableGroup: ...,
+    lockGroup: (targetId) =>
+      set((store) => {
+        const targetNode = findNodeById(store.rule.child, targetId);
+
+        if (targetNode) {
+          implementNodeChanges(targetNode, (node) => void (node.locked = !node.locked));
+        }
+      }),
+
+    disableGroup: (targetId) =>
+      set((store) => {
+        const targetNode = findNodeById(store.rule.child, targetId);
+
+        if (targetNode) {
+          implementNodeChanges(targetNode, (node) => void (node.disabled = !node.disabled));
+        }
+      }),
   }))
 );

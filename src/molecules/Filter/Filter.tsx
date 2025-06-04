@@ -35,7 +35,7 @@ export const Filter = ({ props }: FilterProps) => {
         <Typography variant="body1">{operator}</Typography>
         <Typography variant="body1">{value}</Typography>
       </StyledFilterContainer>
-      <AccessGuard haveAccessRights={!(disabled ?? locked)}>
+      <AccessGuard haveAccessRights={!(disabled || locked)}>
         <ModalDialog trigger={triggerOpenButton}>
           <DialogTitle>Edit filter</DialogTitle>
           <DialogContent>

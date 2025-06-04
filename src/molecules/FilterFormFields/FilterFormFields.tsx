@@ -18,7 +18,7 @@ const StyledStack = styled(Stack)(() => ({
   flexDirection: 'row',
   gap: 5,
   padding: '1rem 2rem',
-  minWidth: '40vw',
+  minWidth: '30vw',
 }));
 
 export const FilterFormFields = ({ nestedNamePart }: FilterFormFieldsProps) => {
