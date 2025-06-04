@@ -14,6 +14,7 @@ const StyledRow = styled(Paper)(() => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginBottom: 5,
 }));
 
 // --------------------------------

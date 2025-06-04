@@ -1,4 +1,5 @@
-import { MenuItem } from '@mui/material';
+import { MenuItem, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { RHFSelect } from 'atoms/hook-form/RHFSelect/RHFSelect';
 import { RHFTextField } from 'atoms/hook-form/RHFTextField/RHFTextField';
 import { _fieldNames, _operators } from 'mock-data/forms';
@@ -13,6 +14,13 @@ interface FilterFormFieldsProps {
   nestedNamePart?: string;
 }
 
+const StyledStack = styled(Stack)(() => ({
+  flexDirection: 'row',
+  gap: 5,
+  padding: '1rem 2rem',
+  minWidth: '40vw',
+}));
+
 export const FilterFormFields = ({ nestedNamePart }: FilterFormFieldsProps) => {
   const names = ['field', 'operator', 'value'].reduce((acc, currKey) => {
     return {
@@ -22,7 +30,7 @@ export const FilterFormFields = ({ nestedNamePart }: FilterFormFieldsProps) => {
   }, {} as FormFields);
 
   return (
-    <>
+    <StyledStack>
       <RHFSelect name={names.field} label={'Field'}>
         {_fieldNames.map((fieldName) => (
           <MenuItem key={fieldName.id} value={fieldName.label}>
@@ -38,6 +46,6 @@ export const FilterFormFields = ({ nestedNamePart }: FilterFormFieldsProps) => {
         ))}
       </RHFSelect>
       <RHFTextField name={names.value} label={'Value'} />
-    </>
+    </StyledStack>
   );
 };

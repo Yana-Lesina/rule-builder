@@ -1,14 +1,25 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse, IconButton, Stack } from '@mui/material';
+import { Collapse, IconButton, Stack, styled, Typography } from '@mui/material';
 import { Filter } from 'molecules/Filter/Filter';
 import { useState } from 'react';
 import { NODE_TYPE, type FilterNode, type GroupNode } from 'types/general';
 import { Actions } from 'molecules/Actions/Actions';
 import { AccessGuard } from 'atoms/AccessGuard/AccessGuard';
+import { ToggleView } from 'atoms/ToggleButton/ToggleButton';
+import { LOGIC_TYPE_COLORS } from 'consts/colors';
 
 interface GroupProps {
   childConfig: FilterNode | GroupNode | null;
 }
+
+const StyledGroupContainer = styled(Stack)(() => ({
+  flexDirection: 'column',
+  spacing: 3,
+  minWidth: '40vw',
+  borderRadius: '1rem',
+  padding: '10px 20px',
+  marginTop: 2,
+}));
 
 export const Group = ({ childConfig }: GroupProps) => {
   const [open, setOpen] = useState(true);
@@ -23,20 +34,15 @@ export const Group = ({ childConfig }: GroupProps) => {
 
   if (childConfig?.children && childConfig.type === NODE_TYPE.GROUP) {
     return (
-      <Stack
-        key={childConfig.id}
-        sx={{
-          border: '1px solid #8A8D91',
-          borderRadius: '1rem',
-          padding: '10px 20px',
-          mt: 2,
-        }}
-        direction="column"
-        spacing={3}
-      >
-        <Stack direction="row" gap={2}>
-          <IconButton onClick={handleCollapse}>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
-          {childConfig.name}
+      <StyledGroupContainer key={childConfig.id} sx={{ border: `2px solid ${LOGIC_TYPE_COLORS[childConfig.logic_type]}` }}>
+        <Stack direction="row" gap={2} mb={2}>
+          <Stack>
+            <IconButton onClick={handleCollapse}>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
+          </Stack>
+          <Stack direction="row" gap={3} alignItems="center">
+            <Typography variant="h6">{childConfig.name}</Typography>
+            <ToggleView value={childConfig.logic_type}></ToggleView>
+          </Stack>
         </Stack>
         <Collapse in={open} unmountOnExit>
           {childConfig.children.map((child) => (
@@ -46,7 +52,7 @@ export const Group = ({ childConfig }: GroupProps) => {
             {<Actions parentId={childConfig.id} />}
           </AccessGuard>
         </Collapse>
-      </Stack>
+      </StyledGroupContainer>
     );
   }
 

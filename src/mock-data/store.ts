@@ -5,7 +5,7 @@ export const INIT_STORE_VALUE: Rule = {
   id: 'root',
   // type: NODE_TYPE.GROUP,
   // parent: null,
-  name: 'Custom Rule',
+  name: 'Some Custom Rule Config',
   child: null,
 };
 

@@ -65,7 +65,7 @@ export const useStore = create<Store>()(
       }),
 
     // deleteInstance: ...,
-    // lockInstance: ...,
-    // disableInstance: ...,
+    // lockGroup: ...,
+    // disableGroup: ...,
   }))
 );

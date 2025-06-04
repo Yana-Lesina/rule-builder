@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Group } from 'organisms/Group/Group';
 import { useStore } from 'store/useStore';
 import { Actions } from 'molecules/Actions/Actions';
@@ -10,8 +10,7 @@ const RuleBuilderPage = () => {
 
   return (
     <>
-      <div>RuleBuilderPage</div>
-      <Box>{ruleConfig.name}</Box>
+      <Typography variant={'h5'}>{ruleConfig.name}</Typography>
       {renderContent}
     </>
   );

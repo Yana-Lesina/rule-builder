@@ -3,15 +3,11 @@ import { cloneElement, useState, type ReactElement } from 'react';
 
 const StyledDialog = styled(Dialog)(() => ({
   '& .MuiDialog-paper': {
-    width: '40vw',
-    minHeight: '65vh',
+    minWidth: '40vw',
+    minHeight: '20vh',
     borderRadius: '1rem',
     padding: '2rem 1rem',
   },
-
-  // '& .MuiDialogContent-root': {
-  //   // paddingTop: '2rem 1.5rem',
-  // },
 }));
 
 interface ModalDialogProps extends Partial<DialogProps> {
@@ -31,10 +27,10 @@ export const ModalDialog = ({ trigger, ...props }: ModalDialogProps) => {
 
   const triggerWithHandler = trigger
     ? cloneElement(trigger, {
-        onClick: () => {
-          handleOpen();
-        },
-      })
+      onClick: () => {
+        handleOpen();
+      },
+    })
     : null;
 
   return (
